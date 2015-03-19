@@ -16,8 +16,8 @@ _VIEWSPACE = {
 }
 
 _VIEWSPACE.CENTER = {
-	x = display.contentCenterX,
-	y = display.contentCenterY
+	X = display.contentCenterX,
+	Y = display.contentCenterY
 }
 
 local background = display.newRect( 0 , 0, _VIEWSPACE.WIDTH, _VIEWSPACE.HEIGHT )
@@ -26,11 +26,11 @@ background.anchorX = 0
 background.anchorY = 0
 
 local btn1 = display.newImageRect(  "images/start.png", 54, 39 )
-btn1.x = _VIEWSPACE.CENTER.x
+btn1.x = _VIEWSPACE.CENTER.X
 btn1.y = _VIEWSPACE.HEIGHT / 6 * 1
 
 local btn2 = display.newImageRect(  "images/start.png", 54, 39 )
-btn2.x = _VIEWSPACE.CENTER.x
+btn2.x = _VIEWSPACE.CENTER.X
 btn2.y = _VIEWSPACE.HEIGHT / 6 * 3
 
 --宣告當按鈕觸發touch事件所要執行的內容
