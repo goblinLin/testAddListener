@@ -18,6 +18,7 @@ _VIEWSPACE.CENTER = {
 
 --設定背景為黃色
 local background = display.newRect( 0 , 0, _VIEWSPACE.WIDTH, _VIEWSPACE.HEIGHT )
+background.id = "bg"
 background:setFillColor( 1,1,0)
 background.anchorX = 0
 background.anchorY = 0
@@ -27,6 +28,7 @@ btn1.x = _VIEWSPACE.CENTER.X
 btn1.y = _VIEWSPACE.HEIGHT / 6 * 1
 
 local btn2 = display.newImageRect(  "images/stop.png", 90, 90 )
+btn2.id = "btn2"
 btn2.x = _VIEWSPACE.CENTER.X
 btn2.y = _VIEWSPACE.HEIGHT / 6 * 3
 
@@ -53,6 +55,7 @@ end
 local function touch2(e)
 	local target = e.target
 	if (e.phase == "began") then
+		print('target id:' .. target.id)
 		print( "onClick Stop began" );
 		target.xScale = 1.2
 		target.yScale = 1.2
@@ -69,12 +72,13 @@ local function touch2(e)
         target.isFocus = nil
 	end
 	--是否攔截Event Queue
-	return true;
+	return false;
 end
 
 --加入偵聽器
 btn1:addEventListener( "touch" )
 btn2:addEventListener("touch",touch2)
+background:addEventListener("touch",touch2)
 
 --移除偵聽器
 --btn1:removeEventListener( "touch")
