@@ -24,6 +24,7 @@ background.anchorX = 0
 background.anchorY = 0
 
 local btn1 = display.newImageRect(  "images/go.png", 90, 90 )
+btn1.id = "btn1"
 btn1.x = _VIEWSPACE.CENTER.X
 btn1.y = _VIEWSPACE.HEIGHT / 6 * 1
 
@@ -53,7 +54,9 @@ end
 
 --這種寫法可讓多個元件共同使用
 local function touch2(e)
+	print('touch2')
 	local target = e.target
+	print('target:' .. target)
 	if (e.phase == "began") then
 		print('target id:' .. target.id)
 		print( "onClick Stop began" );
@@ -72,12 +75,43 @@ local function touch2(e)
         target.isFocus = nil
 	end
 	--是否攔截Event Queue
-	return false;
+	return true;
+end
+
+--多個元件共同使用的第二種版本，可得到自身元件
+local function touch3(self ,e)
+	print('touch3')
+	local target = e.target
+	print('target id:' .. target.id)
+	print('self id:' .. self.id)
+	if (e.phase == "began") then
+		print('target id:' .. target.id)
+		print( "onClick Stop began" );
+		target.xScale = 1.2
+		target.yScale = 1.2
+		-- 設定專注
+        display.getCurrentStage():setFocus( target )
+        target.isFocus = true
+	elseif(e.phase == "moved") then
+	elseif(e.phase == "ended" or e.phase == "canceled") then	
+		print("onClick Stop ended");
+		target.xScale = 1
+		target.yScale = 1
+		-- 取消專注
+        display.getCurrentStage():setFocus( nil )
+        target.isFocus = nil
+	end
+	--是否攔截Event Queue
+	return true;
 end
 
 --加入偵聽器
 btn1:addEventListener( "touch" )
-btn2:addEventListener("touch",touch2)
+--區域事件函式的第一種偵聽方法
+--btn2:addEventListener("touch",touch2)
+--區域事件函式的第二種偵聽方法
+btn2.touch = touch3
+btn2:addEventListener("touch",btn2)
 background:addEventListener("touch",touch2)
 
 --移除偵聽器
